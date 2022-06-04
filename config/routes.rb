@@ -11,10 +11,15 @@ Rails.application.routes.draw do
   end
   patch '/merchants/:merchant_id/items', to: 'merchant_items#update'
 
-  resources :admin, only: [:index]
+    # resources :merchants
 
+
+  resources :admin, only: [:index]
   scope :admin do
-    resources :merchants, controller: 'admin_merchants', only: [:index, :show]
+    resources :merchants, controller: 'admin_merchants', accept: [:delete, :put]
     resources :invoices, controller: 'admin_invoices', only: [:index]
-end
+  end
+  # patch '/admin/merchants/:merchant_id', to: 'admin_merchants#update'
+  # get '/admin/merchants/:merchant_id/edit', to: 'admin_merchants#edit'
+
 end

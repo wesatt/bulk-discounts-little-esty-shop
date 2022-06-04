@@ -1,13 +1,5 @@
 require 'rails_helper'
 
-# Admin Merchant Show
-#
-# As an admin,
-# When I click on the name of a merchant from the admin merchants index page,
-# Then I am taken to that merchant's admin show page (/admin/merchants/merchant_id)
-# And I see the name of that merchant
-
-
 RSpec.describe 'Admin Merchants Show Page', type: :feature do
   let!(:merchants) { create_list(:merchant, 2) }
   let!(:customers) { create_list(:customer, 6) }
@@ -54,6 +46,18 @@ RSpec.describe 'Admin Merchants Show Page', type: :feature do
       expect(page).to have_content("#{merchants[0].name}")
 
     end
+  end
 
+  describe 'User Story 3 - Admin Merchant Update' do
+    it "has a link to update merchants information" do
+      visit "/admin/merchants/#{merchants[0].id}"
+
+      within '#leftSide2' do
+        click_link "Update Merchant"
+
+        expect(current_path).to eq("/admin/merchants/#{merchants[0].id}/edit")
+
+    end
+    end
   end
 end
