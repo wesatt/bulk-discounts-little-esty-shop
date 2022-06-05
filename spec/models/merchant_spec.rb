@@ -9,7 +9,7 @@ RSpec.describe Merchant, type: :model do
     it { should have_many(:transactions).through(:invoices) }
   end
 
-  describe 'valdiations' do
+  describe 'validations' do
     it { should validate_presence_of :name}
   end
 
@@ -32,7 +32,6 @@ RSpec.describe Merchant, type: :model do
         create_list(:transaction, 2, invoice: invoice, result: 0)
       end
     end
-
   end
   let!(:invoice_item1) { create(:invoice_item, item: @items[0], invoice: @invoices[0], status: 0) }
   let!(:invoice_item2) { create(:invoice_item, item: @items[1], invoice: @invoices[1], status: 1) }

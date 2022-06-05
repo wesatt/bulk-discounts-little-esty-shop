@@ -9,16 +9,16 @@ Rails.application.routes.draw do
     resources :items, controller: 'merchant_items'
     resources :invoices, controller: 'merchant_invoices', only: %i[index show update]
   end
-  patch '/merchants/:merchant_id/items', to: 'merchant_items#update'
-
-    # resources :merchants
-
+  
+  # resources :merchants
+  
 
   resources :admin, only: [:index]
-  scope :admin do
-    resources :merchants, controller: 'admin_merchants', accept: [:delete, :put]
-    resources :invoices, controller: 'admin_invoices', only: [:index]
+  namespace :admin do 
+    resources :merchants, except: [:delete, :put]
+    resources :invoices, only: [:index]
   end
+  patch '/merchants/:merchant_id/items', to: 'merchant_items#update'
   # patch '/admin/merchants/:merchant_id', to: 'admin_merchants#update'
   # get '/admin/merchants/:merchant_id/edit', to: 'admin_merchants#edit'
 

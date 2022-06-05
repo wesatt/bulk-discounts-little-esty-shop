@@ -24,11 +24,11 @@ RSpec.describe 'Update Merchant form' do
 
   describe 'edit form' do
     it "can fill out form and update merchant information" do
-        visit edit_merchant_path(merchants[0].id)
+        visit edit_admin_merchant_path(merchants[0].id)
         save_and_open_page
-        fill_in('name', with: 'Cheese Fruit Cake')
+        fill_in('Name', with: 'Cheese Fruit Cake')
         click_on('Submit')
-        expect(current_path).to eq("/admin/merchants/#{merchants[0].id}")
+        expect(current_path).to eq(admin_merchant_path(merchants[0].id))
         expect(page).to have_content("Cheese Fruit Cake")
     end
   end
