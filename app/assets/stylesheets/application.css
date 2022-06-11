@@ -77,3 +77,8 @@ padding: 10px;
   align-items: center;
   text-align: center;
   }
+
+  .discount-table, th, td {
+  border: 1px solid black;
+  border-collapse: collapse;
+}
