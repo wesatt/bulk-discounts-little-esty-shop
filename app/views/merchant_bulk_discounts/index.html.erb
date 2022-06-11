@@ -20,21 +20,24 @@
 </div>
 
 <div class="page-defaults" id="splitSides">
-
   <div class="page-defaults" id="leftSide2">
-    <p>Items Ready to Ship</p>
-    <% @merchant.ordered_not_shipped.each do |invoice_item| %>
-      <div class="invoice-item-<%= invoice_item.id %>">
-      <p><%= invoice_item.item.name %> - <%= link_to "Invoice ##{invoice_item.invoice_id}", "/merchants/#{@merchant.id}/invoices/#{invoice_item.invoice_id}"%> - <%= invoice_item.invoice.formatted_date %></p>
-      </div>
-    <% end %>
+    <h2>Discounts</h2>
+    <table class="discount-table">
+      <tr>
+        <th>Discount ID</th>
+        <th>Percentage Discount</th>
+        <th>Quantity Threshold</th>
+      </tr>
+      <% @merchant.bulk_discounts.each do |discount| %>
+        <tr id="discount-<%= discount.id %>">
+          <td><%= link_to "##{discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}" %></td>
+          <td><%= number_to_percentage((discount.percentage * 100), precision: 0) %></td>
+          <td><%= discount.quantity_threshold %></td>
+        </tr>
+      <% end %>
+    </table>
   </div>
 
   <div class="page-defaults" id="rightSide2">
-  <p>Favorite Customers</p>
-    <% @merchant.top_5_customers.each_with_index do |customer, index| %>
-      <p> <%= "#{index + 1}. #{customer.first_name} #{customer.last_name} - #{customer.transaction_count} purchases" %></p>
-    <% end %>
   </div>
-
 </div>

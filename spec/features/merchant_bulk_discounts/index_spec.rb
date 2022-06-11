@@ -44,32 +44,31 @@ RSpec.describe "bulk discounts index page" do
       expect(page).to have_content("Quantity Threshold")
       expect(page).to_not have_content(11)
       expect(page).to_not have_content(30)
-      expect(page).to_not have_content(25)
 
       within "#discount-#{bulk_discount1.id}" do
-        expect(page).to have_link("Discount ID##{bulk_discount1.id}")
-        expect(page).to have_content("0.10")
+        expect(page).to have_link("##{bulk_discount1.id}")
+        expect(page).to have_content("10%")
         expect(page).to have_content("10")
-        expect(page).to_not have_content("0.25")
+        expect(page).to_not have_content("25%")
         expect(page).to_not have_content("20")
       end
 
       within "#discount-#{bulk_discount7.id}" do
-        expect(page).to have_link("Discount ID##{bulk_discount7.id}")
-        expect(page).to have_content("0.25")
+        expect(page).to have_link("##{bulk_discount7.id}")
+        expect(page).to have_content("25%")
         expect(page).to have_content("20")
-        expect(page).to_not have_content("0.10")
+        expect(page).to_not have_content("10%")
         expect(page).to_not have_content("10")
       end
     end
 
     it "has links to each discount's show page" do
       visit "/merchants/#{merchant1.id}/bulk_discounts"
-      click_link "Discount ID##{bulk_discount1.id}"
+      click_link "##{bulk_discount1.id}"
       expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts/#{bulk_discount1.id}")
 
       visit "/merchants/#{merchant2.id}/bulk_discounts"
-      click_link "Discount ID##{bulk_discount8.id}"
+      click_link "##{bulk_discount8.id}"
       expect(current_path).to eq("/merchants/#{merchant2.id}/bulk_discounts/#{bulk_discount8.id}")
     end
   end
