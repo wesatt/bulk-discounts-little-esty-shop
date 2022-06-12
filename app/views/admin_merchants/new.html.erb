@@ -1,5 +1,26 @@
-<h1>New Merchant Form</h1>
+<div class="page-defaults" id="shopId" >
+  <h1><span>Little Esty Shop</span></h1>
+</div>
 
-<%= render partial: 'form', locals: {model: [:admin, @merchant],
-                                      url: "/admin/merchants",
-                                      button_text: 'Submit'} %>
+<div class="page-defaults" id="splitSides">
+
+  <div class="page-defaults" id="leftSide">
+    <h2>Admin Dashboard</h2>
+  </div>
+
+  <div class="page-defaults" id="rightSide">
+    <ul>
+      <%= link_to "Admin Home", '/admin' %>
+      <%= link_to "Merchants", '/admin/merchants' %>
+      <%= link_to "Invoices", '/admin/invoices' %>
+    </ul>
+  </div>
+
+</div>
+
+<div class="center-left">
+  <h1>New Merchant Form</h1>
+  <%= render partial: 'form', locals: {model: [:admin, @merchant],
+                                        url: "/admin/merchants",
+                                        button_text: 'Submit'} %>
+</div>

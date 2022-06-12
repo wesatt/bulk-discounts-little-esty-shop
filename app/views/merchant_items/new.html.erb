@@ -1,3 +1,27 @@
-<%= render partial: 'form', locals: {model: [@merchant, @item],
-                                     # url: new_merchant_item_path(@merchant.id),
-                                      button_text: 'Submit'} %>
+<div class="page-defaults" id="shopId" >
+  <h1><span>Little Esty Shop</span></h1>
+</div>
+
+<div class="page-defaults" id="splitSides">
+
+  <div class="page-defaults" id="leftSide">
+    <%= @merchant.name %>
+  </div>
+
+  <div class="page-defaults" id="rightSide">
+    <ul>
+      <%= link_to 'Dashboard', "/merchants/#{@merchant.id}/dashboard" %>
+      <%= link_to 'My Items', "/merchants/#{@merchant.id}/items" %>
+      <%= link_to 'My Invoices', "/merchants/#{@merchant.id}/invoices" %>
+      <%= link_to 'My Discounts', "/merchants/#{@merchant.id}/bulk_discounts" %>
+    </ul>
+  </div>
+
+</div>
+
+<div class="center-left">
+  <h2>Create New Item</h2>
+  <%= render partial: 'form', locals: {model: [@merchant, @item],
+                                       # url: new_merchant_item_path(@merchant.id),
+                                        button_text: 'Submit'} %>
+</div>
