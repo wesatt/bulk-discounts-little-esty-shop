@@ -184,27 +184,32 @@ RSpec.describe Merchant, type: :model do
 
     it "#invoice(invoice_id) can find a specific invoice by ID if it belongs to a merchant" do
       expect(merchant1.invoice(invoice1.id)).to eq(invoice1)
-      expect(merchant1.invoice(invoice2.id)).to eq("This invoice does not belong to this merchant")
+      expect(merchant1.invoice(invoice4.id)).to eq("This invoice does not belong to this merchant")
     end
 
-    it "#items_on_invoice(invoice_id) will only return items on an invoice that match the merchant" do
-      expect(merchant1.items_on_invoice(invoice1.id)).to eq([item1, item7])
-      expect(merchant1.items_on_invoice(invoice2.id)).to eq("This invoice does not belong to this merchant")
+    it "#inv_items_on_invoice(invoice_id) will only return invoice items on an invoice that match the merchant" do
+      expect(merchant1.inv_items_on_invoice(invoice1.id)).to eq([invoice_item1, invoice_item3])
+      # expect(merchant1.inv_items_on_invoice(invoice4.id)).to eq("This invoice does not belong to this merchant")
     end
 
     it "#total_invoice_revenue(invoice_id) returns the total revenue for a specific invoice" do
       expect(merchant1.total_invoice_revenue(invoice1.id)).to eq("$70.00")
-      expect(merchant1.items_on_invoice(invoice2.id)).to eq("This invoice does not belong to this merchant")
+      # expect(merchant1.total_invoice_revenue(invoice4.id)).to eq("This invoice does not belong to this merchant")
     end
 
-    it "#discounted_revenue(invoice_id) returns only the revenue discounted from this invoice" do
-      expect(merchant1.total_invoice_revenue(invoice1.id)).to eq("$10.00")
-      expect(merchant1.items_on_invoice(invoice2.id)).to eq("This invoice does not belong to this merchant")
-    end
+    # it "#discounted_revenue(invoice_id) returns only the revenue discounted from this invoice" do
+    #   expect(merchant1.discounted_revenue(invoice1.id)).to eq("$10.00")
+    #   expect(merchant1.discounted_revenue(invoice4.id)).to eq("This invoice does not belong to this merchant")
+    # end
 
     it "#total_discounted_revenue(invoice_id) returns the total discounted revenue for a specific invoice" do
-      expect(merchant1.total_invoice_revenue(invoice1.id)).to eq("$60.00")
-      expect(merchant1.items_on_invoice(invoice2.id)).to eq("This invoice does not belong to this merchant")
+      expect(merchant1.total_discounted_revenue(invoice1.id)).to eq("$60.00")
+      # expect(merchant1.total_discounted_revenue(invoice4.id)).to eq("This invoice does not belong to this merchant")
     end
+
+    # it "#invoice_discounts(invoice_id) returns all the discounts eligible for an invoice" do
+    #   expect(merchant1.invoice_discounts(invoice1.id)).to eq([bulk_discount1, bulk_discount7])
+    #   expect(merchant1.invoice_discounts(invoice4.id)).to eq("This invoice does not belong to this merchant")
+    # end
   end
 end

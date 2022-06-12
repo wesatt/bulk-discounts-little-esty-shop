@@ -73,7 +73,8 @@ RSpec.describe 'Merchant_Invoices Show Page', type: :feature do
       it "shows the total revenue of all items on the invoice" do
         visit "/merchants/#{merchants[0].id}/invoices/#{@invoices[0].id}"
 
-        expect(page).to have_content("Total Revenue: #{@invoices[0].total_revenue}")
+        # expect(page).to have_content("Total Revenue: #{@invoices[0].total_revenue}")
+        expect(page).to have_content("Total Revenue (excluding discounts): #{merchants[0].total_invoice_revenue(@invoices[0].id)}")
       end
     end
 
@@ -125,6 +126,7 @@ RSpec.describe 'Merchant_Invoices Show Page', type: :feature do
     let!(:invoice1) { create(:invoice, status: 0, customer: customer1) }
     let!(:invoice2) { create(:invoice, status: 0, customer: customer1) }
     let!(:invoice3) { create(:invoice, status: 0, customer: customer1) }
+    let!(:invoice4) { create(:invoice, status: 0, customer: customer1) }
 
     #  transaction result:["success", "failed"] no default
     let!(:transaction1) { create(:transaction, invoice: invoice1, result: 0) }
@@ -149,22 +151,29 @@ RSpec.describe 'Merchant_Invoices Show Page', type: :feature do
     let!(:invoice_item10) { create(:invoice_item, unit_price: 200, quantity: 10, status: 0, item: item2, invoice: invoice3) }
     let!(:invoice_item11) { create(:invoice_item, unit_price: 300, quantity: 5, status: 0, item: item7, invoice: invoice3) }
     let!(:invoice_item12) { create(:invoice_item, unit_price: 400, quantity: 5, status: 0, item: item8, invoice: invoice3) }
+
+    let!(:invoice_item13) { create(:invoice_item, unit_price: 400, quantity: 5, status: 0, item: item8, invoice: invoice4) }
     # As a merchant
     # When I visit my merchant invoice show page
     # Then I see the total revenue for my merchant from this invoice (not including discounts)
     # And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
     it "shows the total non-discounted and discounted revenues for an invoice" do
       visit "/merchants/#{merchant1.id}/invoices/#{invoice1.id}"
-      save_and_open_page
 
       expect(page).to have_content("Total Revenue (excluding discounts): $70.00")
       expect(page).to have_content("Total Adjusted Revenue (including discounts): $60.00")
 
       visit "/merchants/#{merchant2.id}/invoices/#{invoice1.id}"
-      save_and_open_page
 
       expect(page).to have_content("Total Revenue (excluding discounts): $100.00")
       expect(page).to have_content("Total Adjusted Revenue (including discounts): $77.00")
+    end
+
+    it "returns an error if you try to visit a wrong merchant/invoice combo" do
+      visit "/merchants/#{merchant1.id}/invoices/#{invoice4.id}"
+
+      expect(page).to have_content("This invoice does not belong to this merchant")
+      expect(page).to_not have_content("Revenue")
     end
   end
 end
