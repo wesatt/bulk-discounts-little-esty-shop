@@ -27,12 +27,14 @@
         <th>Discount ID</th>
         <th>Percentage Discount</th>
         <th>Quantity Threshold</th>
+        <th>Delete?</th>
       </tr>
       <% @merchant.bulk_discounts.each do |discount| %>
         <tr id="discount-<%= discount.id %>">
           <td><%= link_to "##{discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}" %></td>
           <td><%= number_to_percentage((discount.percentage * 100), precision: 0) %></td>
           <td><%= discount.quantity_threshold %></td>
+          <td><%= link_to "Delete", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}", method: :delete %></td>
         </tr>
       <% end %>
     </table>

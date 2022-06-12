@@ -14,10 +14,15 @@ class MerchantBulkDiscountsController < ApplicationController
   def create
     new_discount = BulkDiscount.new(bulk_discount_params)
     if new_discount.save
-      redirect_to "/merchants/#{params[:merchant_id]}/bulk_discounts/", notice: "Discount was created successfully."
+      redirect_to merchant_bulk_discounts_path, notice: "Discount was created successfully."
     else
-      redirect_to "/merchants/#{params[:merchant_id]}/bulk_discounts/new", notice: "Necessary information was missing or invalid. Discount not created."
+      redirect_to new_merchant_bulk_discount_path, notice: "Necessary information was missing or invalid. Discount not created."
     end
+  end
+
+  def destroy
+    BulkDiscount.destroy(params[:id])
+    redirect_to merchant_bulk_discounts_path
   end
 
 private
