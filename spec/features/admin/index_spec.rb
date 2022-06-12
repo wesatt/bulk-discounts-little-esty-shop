@@ -131,7 +131,7 @@ RSpec.describe "Admin Dashboard", type: :feature do
   describe "wireframe link (no user story)" do
     it "has a link that takes you back to the dashboard" do
       visit admin_index_path
-      click_link "Dashboard"
+      click_link "Admin Home"
       expect(current_path).to eq(admin_index_path)
     end
   end
