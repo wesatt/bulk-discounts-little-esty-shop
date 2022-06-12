@@ -5,17 +5,21 @@
 <div class="page-defaults" id="splitSides">
 
   <div class="page-defaults" id="leftSide">
-    <%= @discount.merchant.name %>
+    <%= @merchant.name %>
   </div>
 
   <div class="page-defaults" id="rightSide">
     <ul>
-      <%= link_to 'Dashboard', "/merchants/#{@discount.merchant.id}/dashboard" %>
-      <%= link_to 'My Items', "/merchants/#{@discount.merchant.id}/items" %>
-      <%= link_to 'My Invoices', "/merchants/#{@discount.merchant.id}/invoices" %>
-      <%= link_to 'View All Discounts', "/merchants/#{@discount.merchant.id}/bulk_discounts" %>
+      <%= link_to 'Dashboard', "/merchants/#{@merchant.id}/dashboard" %>
+      <%= link_to 'My Items', "/merchants/#{@merchant.id}/items" %>
+      <%= link_to 'My Invoices', "/merchants/#{@merchant.id}/invoices" %>
+      <%= link_to 'View All Discounts', "/merchants/#{@merchant.id}/bulk_discounts" %>
     </ul>
   </div>
+
+</div>
+
+<div class="center-screen">
 </div>
 
 <div class="page-defaults" id="splitSides">
