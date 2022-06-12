@@ -4,16 +4,16 @@ Rails.application.routes.draw do
 
   get '/merchants/:id/dashboard', to: 'merchants#show'
 
-  resources :merchants, only: [:show] do
-    resources :items, controller: 'merchant_items'
+  resources :merchants, only: %i[show] do
+    resources :items, controller: 'merchant_items', except: %i[destroy]
     resources :invoices, controller: 'merchant_invoices', only: %i[index show update]
-    resources :bulk_discounts, controller: 'merchant_bulk_discounts', only: %i[index show new create]
+    resources :bulk_discounts, controller: 'merchant_bulk_discounts', only: %i[index show new create destroy]
   end
 
-  resources :admin, only: [:index]
+  resources :admin, only: %i[index]
 
   scope '/admin' do
-    resources :merchants, controller: 'admin_merchants', except: %i[delete]
+    resources :merchants, controller: 'admin_merchants', except: %i[destroy]
     resources :invoices, controller: 'admin_invoices', only: %i[index show update]
   end
 end

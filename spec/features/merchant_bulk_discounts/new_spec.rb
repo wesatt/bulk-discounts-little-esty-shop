@@ -35,7 +35,7 @@ RSpec.describe "bulk discounts new (create) page" do
       fill_in('bulk_discount[quantity_threshold]', with: 15)
       click_on 'Create Discount'
 
-      expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts/")
+      expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts")
       expect(page).to have_content("15%")
       expect(page).to have_content(15)
     end
