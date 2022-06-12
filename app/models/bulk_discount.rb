@@ -7,5 +7,6 @@ class BulkDiscount < ApplicationRecord
   has_many :transactions, through: :invoices
 
   validates :percentage, numericality: { greater_than: 0.01, less_than: 0.99 }
-  validates_numericality_of :quantity_threshold
+  validates :quantity_threshold, numericality: { only_integer: true }
+
 end

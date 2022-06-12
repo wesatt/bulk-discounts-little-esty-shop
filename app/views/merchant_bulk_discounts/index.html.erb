@@ -16,12 +16,16 @@
       <%= link_to 'My Discounts', "/merchants/#{@merchant.id}/bulk_discounts" %>
     </ul>
   </div>
-
 </div>
 
 <div class="page-defaults" id="splitSides">
   <div class="page-defaults" id="leftSide2">
     <h2>Discounts</h2>
+    <% flash.each do |type, msg| %>
+      <div>
+        <%= msg %>
+      </div>
+    <% end %>
     <table class="discount-table">
       <tr>
         <th>Discount ID</th>

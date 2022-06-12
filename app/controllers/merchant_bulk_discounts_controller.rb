@@ -25,6 +25,19 @@ class MerchantBulkDiscountsController < ApplicationController
     redirect_to merchant_bulk_discounts_path
   end
 
+  def edit
+    @discount = BulkDiscount.find(params[:id])
+  end
+
+  def update
+    discount = BulkDiscount.find(params[:id])
+    if discount.update(bulk_discount_params)
+      redirect_to merchant_bulk_discount_path, notice: "Discount was updated successfully."
+    else
+      redirect_to edit_merchant_bulk_discount_path, notice: "Necessary information was missing or invalid. Discount not updated."
+    end
+  end
+
 private
   def bulk_discount_params
     full_params = params.require(:bulk_discount).permit(
