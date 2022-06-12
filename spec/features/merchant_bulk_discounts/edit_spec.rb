@@ -31,8 +31,8 @@ RSpec.describe "bulk discounts edit page" do
       expect(page).to_not have_content("Quantity Threshold: 20")
       click_link("Change This Discount")
 
-      expect(page).to have_field(:percentage, with: 0.26)
-      expect(page).to have_field(:quantity_threshold, with: 21)
+      expect(page).to have_field('bulk_discount[percentage]', with: 0.26)
+      expect(page).to have_field('bulk_discount[quantity_threshold]', with: 21)
       expect(page).to have_content("For percentage, please enter a number between 0.01(1%) and 0.99(99%)")
 
       fill_in('bulk_discount[percentage]', with: 0.30)

@@ -18,16 +18,21 @@
   </div>
 </div>
 
+<div class="center-left">
+  <h2>Change An Existing Discount</h2>
+  <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
+  <%= render partial: 'form', locals: {model: @discount,
+                                        url: merchant_bulk_discount_path,
+                                        method: :patch,
+                                        button_text: 'Update Discount'} %>
+</div>
+
 <div class="page-defaults" id="splitSides">
   <div class="page-defaults" id="leftSide2">
-    <% flash.each do |type, msg| %>
-      <div>
-        <%= msg %>
-      </div>
-    <% end %>
-    <p><strong>Percentage Discount:</strong> <%= number_to_percentage((@discount.percentage * 100), precision: 0) %></p>
-    <p><strong>Quantity Threshold:</strong> <%= @discount.quantity_threshold %></p>
-    <p><%= link_to "Change This Discount", edit_merchant_bulk_discount_path %></p>
   </div>
 
   <div class="page-defaults" id="rightSide2">
