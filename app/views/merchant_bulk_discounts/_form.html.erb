@@ -1,0 +1,8 @@
+<%= form_with url: url, model: model do |f| %>
+  <p><%= f.label :percentage %></p>
+  <%= f.text_field :percentage%>
+  <p>For percentage, please enter a number between 0.01(1%) and 0.99(99%)</p>
+  <p><%= f.label :quantity_threshold %></p>
+  <%= f.text_field :quantity_threshold %>
+  <%= f.submit button_text %>
+<% end %>

@@ -19,24 +19,21 @@
 
 </div>
 
+<div class="center-left">
+  <h2>Create A New Discount</h2>
+  <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
+  <%= render partial: 'form', locals: {model: BulkDiscount,
+                                        url: merchant_bulk_discounts_path,
+                                        method: :post,
+                                        button_text: 'Create Discount'} %>
+</div>
+
 <div class="page-defaults" id="splitSides">
   <div class="page-defaults" id="leftSide2">
-    <h2>Discounts</h2>
-    <table class="discount-table">
-      <tr>
-        <th>Discount ID</th>
-        <th>Percentage Discount</th>
-        <th>Quantity Threshold</th>
-      </tr>
-      <% @merchant.bulk_discounts.each do |discount| %>
-        <tr id="discount-<%= discount.id %>">
-          <td><%= link_to "##{discount.id}", "/merchants/#{@merchant.id}/bulk_discounts/#{discount.id}" %></td>
-          <td><%= number_to_percentage((discount.percentage * 100), precision: 0) %></td>
-          <td><%= discount.quantity_threshold %></td>
-        </tr>
-      <% end %>
-    </table>
-    <%= link_to "Create A New Discount", "/merchants/#{@merchant.id}/bulk_discounts/new" %>
   </div>
 
   <div class="page-defaults" id="rightSide2">
