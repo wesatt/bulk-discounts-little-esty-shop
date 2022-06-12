@@ -71,8 +71,25 @@ RSpec.describe "bulk discounts index page" do
     # When I click this link
     # Then I am redirected back to the bulk discounts index page
     # And I no longer see the discount listed
-    it "" do
+    it "has a link to delete a discount" do
+      visit "/merchants/#{merchant1.id}/bulk_discounts"
 
+      expect(page).to have_content("10%")
+      expect(page).to have_content("25%")
+
+      within "#discount-#{bulk_discount1.id}" do
+        expect(page).to have_content("10%")
+        expect(page).to have_link("Delete")
+      end
+
+      within "#discount-#{bulk_discount7.id}" do
+        expect(page).to have_content("25%")
+        click_link("Delete")
+      end
+
+      expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts")
+      expect(page).to have_content("10%")
+      expect(page).to_not have_content("25%")
     end
   end
 end
