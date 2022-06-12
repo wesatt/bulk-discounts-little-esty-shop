@@ -155,14 +155,16 @@ RSpec.describe 'Merchant_Invoices Show Page', type: :feature do
     # And I see the total discounted revenue for my merchant from this invoice which includes bulk discounts in the calculation
     it "shows the total non-discounted and discounted revenues for an invoice" do
       visit "/merchants/#{merchant1.id}/invoices/#{invoice1.id}"
+      save_and_open_page
 
-      expect(page).to have_content("Total Revenue (excluding discounts): $7,000.00")
-      expect(page).to have_content("Total Adjusted Revenue (including discounts): $6,000.00")
+      expect(page).to have_content("Total Revenue (excluding discounts): $70.00")
+      expect(page).to have_content("Total Adjusted Revenue (including discounts): $60.00")
 
       visit "/merchants/#{merchant2.id}/invoices/#{invoice1.id}"
+      save_and_open_page
 
-      expect(page).to have_content("Total Revenue (excluding discounts): $10,000.00")
-      expect(page).to have_content("Total Adjusted Revenue (including discounts): $7,700.00")
+      expect(page).to have_content("Total Revenue (excluding discounts): $100.00")
+      expect(page).to have_content("Total Adjusted Revenue (including discounts): $77.00")
     end
   end
 end

@@ -3,11 +3,9 @@
 </div>
 
 <div class="page-defaults" id="splitSides">
-
   <div class="page-defaults" id="leftSide">
     <%= @merchant.name %>
   </div>
-
   <div class="page-defaults" id="rightSide">
     <ul>
       <%= link_to 'Dashboard', "/merchants/#{@merchant.id}/dashboard" %>
@@ -16,41 +14,45 @@
       <%= link_to 'My Discounts', "/merchants/#{@merchant.id}/bulk_discounts" %>
     </ul>
   </div>
-
 </div>
 
-<div class="page-defaults" id="splitSides">
-  <div class="page-defaults" id="leftSide2">
-    <h2><%= "Invoice: #{@invoice.id}"%> </h2>
-    <p><%= "Status: #{@invoice.status}" %> </p>
-    <p><%= "Created on: #{@invoice.created_at.strftime("%A, %B %d, %Y")}" %></p>
-    <p><%= "Total Revenue: #{@invoice.total_revenue}" %></p>
+<div class="page-defaults">
+  <div class="center-screen">
+    <h2><%= "Invoice: #{@invoice.id}"%></h2>
+    <p><strong>Status: </strong><%= @invoice.status %> </p>
+    <p><strong>Created on: </strong><%= @invoice.created_at.strftime("%A, %B %d, %Y") %></p>
+    <p><strong>Total Revenue (excluding discounts): </strong><%= @invoice.total_revenue %></p>
+    <% # binding.pry %>
+    <p><strong>Total Adjusted Revenue (including discounts): </strong><%= @invoice.total_revenue %></p>
     <h2>Customer</h2>
     <p> <%= "#{@invoice.customer.first_name} #{@invoice.customer.last_name}" %></p>
   </div>
 </div>
 
-
-<div class="page-defaults" id="itemtable">
-  <table>
-    <tr>
-      <th><h2> Item Name </h2></th>
-      <th><h2> Quantity </h2></th>
-      <th><h2> Unit Price </h2></th>
-      <th><h2> Status </h2></th>
-    </tr>
-      <% @invoice.invoice_items.each do |invoice_item| %>
+<div class="page-defaults" id="splitSides">
+  <div class="page-defaults" id="leftSide2">
+    <div class="page-defaults" id="itemtable">
+      <table>
+        <tr>
+          <th><h2> Item Name </h2></th>
+          <th><h2> Quantity </h2></th>
+          <th><h2> Unit Price </h2></th>
+          <th><h2> Status </h2></th>
+        </tr>
+        <% @invoice.invoice_items.each do |invoice_item| %>
         <tr id="invoiceItem-<%= invoice_item.id %>">
           <td> <%= invoice_item.item.name %></td>
           <td> <%= invoice_item.quantity %></td>
           <td> <%= invoice_item.unit_price_converted %></td>
           <td>
             <%= form_with url: "/merchants/#{@merchant.id}/invoices/#{@invoice.id}?invoice_item_id=#{invoice_item.id}", method: :patch do |form| %>
-              <%= form.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
-              <%= form.submit "Update Item Status" %>
+            <%= form.select :status, ["pending", "packaged", "shipped"], :selected => invoice_item.status %>
+            <%= form.submit "Update Item Status" %>
             <% end %>
           </td>
         </tr>
-      <% end %>
-  </table>
+        <% end %>
+      </table>
+    </div>
+  </div>
 </div>
