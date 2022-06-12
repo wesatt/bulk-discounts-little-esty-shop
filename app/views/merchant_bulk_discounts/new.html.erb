@@ -19,7 +19,17 @@
 
 </div>
 
-<div class="center-screen">
+<div class="center-left">
+  <h2>Create A New Discount</h2>
+  <% flash.each do |type, msg| %>
+    <div>
+      <%= msg %>
+    </div>
+  <% end %>
+  <%= render partial: 'form', locals: {model: BulkDiscount,
+                                        url: merchant_bulk_discounts_path,
+                                        method: :post,
+                                        button_text: 'Create Discount'} %>
 </div>
 
 <div class="page-defaults" id="splitSides">

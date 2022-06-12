@@ -78,6 +78,15 @@ padding: 10px;
   text-align: center;
   }
 
+.center-left {
+  display: flex;
+	flex-direction: column;
+	flex-wrap: nowrap;
+	justify-content: center;
+	align-items: center;
+	align-content: stretch;
+  }
+
   .discount-table, th, td {
   border: 1px solid black;
   border-collapse: collapse;

@@ -28,26 +28,26 @@ RSpec.describe "bulk discounts new (create) page" do
     it "can create a new discount" do
       visit "/merchants/#{merchant1.id}/bulk_discounts"
       expect(page).to_not have_content("15%")
-      expect(page).to_not have_content(20)
+      expect(page).to_not have_content(15)
       click_link "Create A New Discount"
 
       fill_in('bulk_discount[percentage]', with: 0.15)
-      fill_in('bulk_discount[quantity_threshold]', with: 20)
-      click_on 'Submit'
+      fill_in('bulk_discount[quantity_threshold]', with: 15)
+      click_on 'Create Discount'
 
-      expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts")
+      expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts/")
       expect(page).to have_content("15%")
-      expect(page).to have_content(20)
+      expect(page).to have_content(15)
     end
 
     it "returns an error if necessary info is missing" do
       visit "/merchants/#{merchant1.id}/bulk_discounts/new"
-      expect(page).to have_content("For percentage, please enter a number between 0.01(1%) and 0.99(99%).")
+      expect(page).to have_content("For percentage, please enter a number between 0.01(1%) and 0.99(99%)")
       expect(page).to_not have_content("Necessary information was missing or invalid. Discount not created.")
 
       fill_in('bulk_discount[percentage]', with: 0.15)
       fill_in('bulk_discount[quantity_threshold]', with: "")
-      click_on 'Submit'
+      click_on 'Create Discount'
 
       expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts/new")
       expect(page).to have_content("Necessary information was missing or invalid. Discount not created.")
@@ -55,12 +55,12 @@ RSpec.describe "bulk discounts new (create) page" do
 
     it "returns an error if necessary info is invalid" do
       visit "/merchants/#{merchant1.id}/bulk_discounts/new"
-      expect(page).to have_content("For percentage, please enter a number between 0.01(1%) and 0.99(99%).")
+      expect(page).to have_content("For percentage, please enter a number between 0.01(1%) and 0.99(99%)")
       expect(page).to_not have_content("Necessary information was missing or invalid. Discount not created.")
 
       fill_in('bulk_discount[percentage]', with: 15)
       fill_in('bulk_discount[quantity_threshold]', with: 20)
-      click_on 'Submit'
+      click_on 'Create Discount'
 
       expect(current_path).to eq("/merchants/#{merchant1.id}/bulk_discounts/new")
       expect(page).to have_content("Necessary information was missing or invalid. Discount not created.")

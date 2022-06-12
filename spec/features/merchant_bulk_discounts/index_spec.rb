@@ -30,15 +30,12 @@ RSpec.describe "bulk discounts index page" do
 
       expect(page).to have_content("Percentage Discount")
       expect(page).to have_content("Quantity Threshold")
-      expect(page).to_not have_content(11)
-      expect(page).to_not have_content(21)
 
       within "#discount-#{bulk_discount1.id}" do
         expect(page).to have_link("##{bulk_discount1.id}")
         expect(page).to have_content("10%")
         expect(page).to have_content("10")
         expect(page).to_not have_content("25%")
-        expect(page).to_not have_content("20")
       end
 
       within "#discount-#{bulk_discount7.id}" do
@@ -46,7 +43,6 @@ RSpec.describe "bulk discounts index page" do
         expect(page).to have_content("25%")
         expect(page).to have_content("20")
         expect(page).to_not have_content("10%")
-        expect(page).to_not have_content("10")
       end
     end
 
