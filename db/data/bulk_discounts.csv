@@ -1,0 +1,6 @@
+id,percentage,quantity_threshold,merchant_id
+1,0.10,10,1
+2,0.10,10,2
+3,0.10,10,3
+4,0.10,10,4
+5,0.15,20,4
