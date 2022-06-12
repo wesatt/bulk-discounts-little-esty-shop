@@ -28,7 +28,6 @@ RSpec.describe "bulk discounts new (create) page" do
     it "can create a new discount" do
       visit "/merchants/#{merchant1.id}/bulk_discounts"
       expect(page).to_not have_content("15%")
-      expect(page).to_not have_content(15)
       click_link "Create A New Discount"
 
       fill_in('bulk_discount[percentage]', with: 0.15)
