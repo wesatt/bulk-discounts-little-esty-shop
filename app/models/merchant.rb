@@ -59,4 +59,48 @@ class Merchant < ApplicationRecord
     .first
     .strftime("%m/%d/%y")
   end
+
+  def invoice(invoice_id)
+    if invoices.ids.include?(invoice_id)
+      invoices.find(invoice_id)
+    else
+      "This invoice does not belong to this merchant"
+    end
+  end
+
+  def inv_items_on_invoice(invoice_id)
+    invoice(invoice_id)
+    .invoice_items
+    .joins(:merchants)
+    .where("merchants.id = #{self.id}")
+  end
+
+  def total_invoice_revenue(invoice_id)
+    helpers.number_to_currency(
+      inv_items_on_invoice(invoice_id)
+      .sum("invoice_items.unit_price * invoice_items.quantity") / 100
+    )
+  end
+
+  def total_discounted_revenue(invoice_id)
+    total = inv_items_on_invoice(invoice_id).map do |inv_item|
+      inv_item.adjusted_price * inv_item.quantity
+    end.sum
+    helpers.number_to_currency(total/100)
+  end
+
+  # def invoice_discounts(invoice_id)
+  #   merch_inv_items = inv_items_on_invoice(invoice_id)
+  #   if merch_inv_items == "This invoice does not belong to this merchant"
+  #     "This invoice does not belong to this merchant"
+  #   else
+  #     merch_inv_items.map { |inv_item| inv_item.best_discount }
+  #   end
+  # end
+
+private
+  # Helper Methods
+  def helpers
+  ActionController::Base.helpers
+  end
 end

@@ -15,6 +15,21 @@ class InvoiceItem < ApplicationRecord
     helpers.number_to_currency(self.unit_price.to_f/100)
   end
 
+  def best_discount
+    bulk_discounts
+    .where("#{self.quantity} >= bulk_discounts.quantity_threshold")
+    .order(quantity_threshold: :desc)
+    .first
+  end
+
+  def adjusted_price
+    if best_discount.nil?
+      unit_price
+    else
+      unit_price - (unit_price * best_discount.percentage)
+    end
+  end
+
 private
   # Helper Methods
   def helpers
