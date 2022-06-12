@@ -20,6 +20,8 @@
 
 <div class="page-defaults" id="splitSides">
   <div class="page-defaults" id="leftSide2">
+    <p><strong>Percentage Discount:</strong> <%= number_to_percentage((@discount.percentage * 100), precision: 0) %></p>
+    <p><strong>Quantity Threshold:</strong> <%= @discount.quantity_threshold %></p>
   </div>
 
   <div class="page-defaults" id="rightSide2">
