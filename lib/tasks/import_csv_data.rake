@@ -5,7 +5,7 @@ namespace :csv_load do
   task customers: :environment do
     Customer.destroy_all
     CSV.foreach('db/data/customers.csv', headers: true) do |row|
-      Customer.create(row.to_h)
+      Customer.create!(row.to_h)
     end
     # resets primary key sequence in rails based on current data
     ActiveRecord::Base.connection.reset_pk_sequence!('customers')
@@ -24,7 +24,7 @@ namespace :csv_load do
                else
                  raise "Unknown 'status' found while creating 'Invoices'"
                end
-      Invoice.create(row.to_h)
+      Invoice.create!(row.to_h)
     end
     ActiveRecord::Base.connection.reset_pk_sequence!('invoices')
     puts "'Invoices' Created"
@@ -76,15 +76,26 @@ namespace :csv_load do
                else
                  raise "Unknown 'status' found while creating 'Invoice Items'"
                end
-      InvoiceItem.create(row.to_h)
+      InvoiceItem.create!(row.to_h)
     end
     ActiveRecord::Base.connection.reset_pk_sequence!('invoice_items')
     puts "'Invoice Items' Created"
   end
 
+  task bulk_discounts: :environment do
+    BulkDiscount.destroy_all
+    CSV.foreach('db/data/bulk_discounts.csv', headers: true) do |row|
+      BulkDiscount.create!(row.to_h)
+    end
+    # resets primary key sequence in rails based on current data
+    ActiveRecord::Base.connection.reset_pk_sequence!('bulk_discounts')
+    puts "'Bulk Discounts' Created"
+  end
+
   task delete_all: :environment do
     InvoiceItem.destroy_all
     Item.destroy_all
+    BulkDiscount.destroy_all
     Merchant.destroy_all
     Transaction.destroy_all
     Invoice.destroy_all
@@ -92,7 +103,7 @@ namespace :csv_load do
     puts "'Delete All' Complete"
   end
 
-  task :all => [:delete_all, :customers, :invoices, :transactions, :merchants, :items, :invoice_items]
+  task :all => [:delete_all, :customers, :invoices, :transactions, :merchants, :items, :invoice_items, :bulk_discounts]
 
   desc 'reset all table primary keys'
   task reset_keys: :environment do
