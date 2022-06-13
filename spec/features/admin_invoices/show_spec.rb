@@ -13,8 +13,8 @@ RSpec.describe 'Admin Invoice Show Page', type: :feature do
 
     let!(:transaction1) { create(:transaction, invoice: invoice1, result: 1) }
 
-    let!(:invoice_item1) { create(:invoice_item, item: item1, invoice: invoice1, unit_price: 3011) }
-    let!(:invoice_item2) { create(:invoice_item, item: item2, invoice: invoice1, unit_price: 2524) }
+    let!(:invoice_item1) { create(:invoice_item, item: item1, invoice: invoice1, unit_price: 3011, quantity: 20) }
+    let!(:invoice_item2) { create(:invoice_item, item: item2, invoice: invoice1, unit_price: 2524, quantity: 20) }
     it 'lists invoice attributes' do
       visit "/admin/invoices/#{invoice1.id}"
       # expect(page).to have_content("Status: #{invoice1.status}")
@@ -43,7 +43,7 @@ RSpec.describe 'Admin Invoice Show Page', type: :feature do
     it 'shows total revenue that will be generated from this invoice' do
       visit "/admin/invoices/#{invoice1.id}"
 
-      expect(page).to have_content('Total Revenue: $55.35')
+      expect(page).to have_content('Total Revenue (excluding discounts): $1,107.00')
     end
 
     it 'has a select field to update invoice status' do
@@ -129,7 +129,7 @@ RSpec.describe 'Admin Invoice Show Page', type: :feature do
 
         visit "/admin/invoices/#{invoice3.id}"
 
-        expect(page).to have_content("Total Revenue (excluding discounts): $75.00")
+        expect(page).to have_content("Total Revenue (excluding discounts): $65.00")
         expect(page).to have_content("Total Adjusted Revenue (including discounts): $61.00")
       end
     end
