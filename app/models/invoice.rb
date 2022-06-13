@@ -9,7 +9,18 @@ class Invoice < ApplicationRecord
   enum status:["in progress", "completed", "cancelled"]
 
   def total_revenue
-    helpers.number_to_currency((self.invoice_items.sum(:unit_price).to_f)/100)
+    helpers
+    .number_to_currency(
+      invoice_items
+      .sum("unit_price * quantity") / 100
+    )
+  end
+
+  def total_discounted_revenue
+    total = invoice_items.map do |inv_item|
+      inv_item.adjusted_price * inv_item.quantity
+    end.sum
+    helpers.number_to_currency(total / 100)
   end
 
   def self.not_shipped
