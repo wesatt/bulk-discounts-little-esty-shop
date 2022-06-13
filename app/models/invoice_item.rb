@@ -17,7 +17,7 @@ class InvoiceItem < ApplicationRecord
 
   def best_discount
     bulk_discounts
-    .where("#{self.quantity} >= bulk_discounts.quantity_threshold")
+    .where("bulk_discounts.quantity_threshold <= ?", self.quantity)
     .order(quantity_threshold: :desc)
     .first
   end
