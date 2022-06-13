@@ -175,5 +175,35 @@ RSpec.describe 'Merchant_Invoices Show Page', type: :feature do
       expect(page).to have_content("This invoice does not belong to this merchant")
       expect(page).to_not have_content("Revenue")
     end
+
+    describe "User Story - Merchant Invoice Show Page: Link to applied discounts" do
+      let!(:item9) { create(:item, unit_price: 400, status: 1, merchant: merchant1) }
+      let!(:invoice_item14) { create(:invoice_item, unit_price: 400, quantity: 5, status: 0, item: item9, invoice: invoice1) }
+      # As a merchant
+      # When I visit my merchant invoice show page
+      # Next to each invoice item I see a link to the show page for the bulk discount that was applied (if any)
+      it "has a link to each applied discount" do
+        visit "/merchants/#{merchant1.id}/invoices/#{invoice1.id}"
+
+        within "#invoiceItem-#{invoice_item1.id}" do
+          expect(page).to have_link("Discount ##{bulk_discount1.id}")
+          expect(page).to_not have_link("Discount ##{bulk_discount7.id}")
+          expect(page).to_not have_content("N/A")
+        end
+
+        within "#invoiceItem-#{invoice_item3.id}" do
+          expect(page).to have_link("Discount ##{bulk_discount7.id}")
+          expect(page).to_not have_link("Discount ##{bulk_discount1.id}")
+          expect(page).to_not have_content("N/A")
+        end
+
+        within "#invoiceItem-#{invoice_item14.id}" do
+          expect(page).to have_content("N/A")
+          expect(page).to_not have_link("Discount ##{bulk_discount1.id}")
+          expect(page).to_not have_link("Discount ##{bulk_discount7.id}")
+        end
+      end
+    end
   end
+
 end
