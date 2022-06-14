@@ -46,5 +46,11 @@
   </div>
 
   <div class="page-defaults" id="rightSide2">
+    <h2>Upcoming US Holidays:</h2>
+    <div class="holidays">
+      <% @holidays.upcoming_holidays[0..2].each do |holiday| %>
+        <p><strong><%= holiday.name %>:</strong> <%= holiday.date %></p>
+      <% end %>
+    </div>
   </div>
 </div>

@@ -92,4 +92,24 @@ RSpec.describe "bulk discounts index page" do
       expect(page).to_not have_content("25%")
     end
   end
+
+  describe "API user story" do
+    let!(:merchant1) { create(:merchant, status: 1) }
+    let!(:merchant2) { create(:merchant, status: 1) }
+
+    let!(:bulk_discount1) { BulkDiscount.create(percentage: 0.10, quantity_threshold: 10, merchant: merchant1) }
+    let!(:bulk_discount2) { BulkDiscount.create(percentage: 0.11, quantity_threshold: 11, merchant: merchant2) }
+    let!(:bulk_discount7) { BulkDiscount.create(percentage: 0.25, quantity_threshold: 20, merchant: merchant1) }
+    let!(:bulk_discount8) { BulkDiscount.create(percentage: 0.26, quantity_threshold: 21, merchant: merchant2) }
+    # As a merchant
+    # When I visit the discounts index page
+    # I see a section with a header of "Upcoming Holidays"
+    # In this section the name and date of the next 3 upcoming US holidays are listed.
+    # Use the Next Public Holidays Endpoint in the [Nager.Date API](https://date.nager.at/swagger/index.html)
+    it "has a section for next 3 upcoming US holidays being supplied by API" do
+      visit "/merchants/#{merchant1.id}/bulk_discounts"
+
+      expect(page).to have_content("Upcoming US Holidays")
+    end
+  end
 end
