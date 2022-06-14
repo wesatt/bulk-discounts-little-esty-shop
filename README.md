@@ -1,5 +1,11 @@
 # Little Esty Shop
 
+## Schema and Deployed Link
+
+["Little 'Esty' Shop" on Heroku](https://calm-falls-74497.herokuapp.com/)
+
+![Little Esty DB Layout from dbdiagram.io](images/little_esty_db_schema.png "Little Esty DB Layout from dbdiagram.io")
+
 ## Background and Description
 
 "Little Esty Shop" is a group project that requires students to build a fictitious e-commerce platform where merchants and admins can manage inventory and fulfill customer invoices.
